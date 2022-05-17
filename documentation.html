@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html>
+
+<body>
+
+<!-- movies - get
+movies/:genre - get
+movies/:description - get
+movies/:director - get
+movies/:imageUrl - get
+genre - get
+director - get
+register - post
+account - get
+account/favorites/add - put
+account/unregister - delete  -->
+
+  <table>
+    <tr>
+      <th>URL</th>
+      <th>HTTP Method</th>
+      <th>Request Body Data Format</th>
+      <th>Response Body Data Format</th>
+    </tr>
+    <tr>
+      <td>/movies</td>
+      <td>GET</td>
+      <td>JSON list of all movies</td>
+      <td>JSON list of all movies</td>
+    </td>
+    <tr>
+      <td>/:movie</td>
+      <td>GET</td>
+      <td>JSON list of movie selected by user</td>
+      <td>JSON list of movie selected by user</td>
+    </td>
+    <tr>
+      <td>/:movie/:description</td>
+      <td>GET</td>
+      <td>JSON object holding movie description</td>
+      <td>JSON object holding movie description</td>
+    </tr>  
+    <tr>
+      <td>/:movie/:genre</td>
+      <td>GET</td>
+      <td>JSON object holding movie genre</td>
+      <td>JSON object holding movie genre</td>
+    </tr>
+    <tr>
+      <td>/:movie/:director</td>
+      <td>GET</td>
+      <td>JSON object holding movie director</td>
+      <td>JSON object holding movie director</td>
+    </tr>
+    <tr>
+      <td>/:movie/:imageUrl</td>
+      <td>GET</td>
+      <td>JSON object holding movie image</td>
+      <td>JSON object holding movie image</td>
+    </tr>
+    <tr>
+      <td>/genres</td>
+      <td>GET</td>
+      <td>JSON list of all movie genres</td>
+      <td>JSON list of all movie genres</td>
+    </tr>
+    <tr>
+      <td>/directors</td>
+      <td>GET</td>
+      <td>JSON list of all movie directors</td>
+      <td>JSON list of all movie directors</td>
+    </tr>
+    <tr>
+      <td>/register</td>
+      <td>POST</td>
+      <td>JSON object holding user name and password</td>
+      <td>JSON object holding user name and password</td>
+    </tr>
+    <tr>
+      <td>/account</td>
+      <td>GET</td>
+      <td>JSON object holding user account profile</td>
+      <td>JSON object holding user account profile</td>
+    </tr>
+    <tr>
+      <td>/account/favorites/add</td>
+      <td>PUT</td>
+      <td>JSON object holding movie data submitted by user</td>
+      <td>JSON object holding movie data submitted by user</td>
+    </tr>
+    <tr>
+      <td>/account/unregister</td>
+      <td>DELETE</td>
+      <td>Erase user data</td>
+      <td>Erase user data</td>
+    </tr>
+
+</body>
+
+</html>
