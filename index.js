@@ -1,15 +1,22 @@
+const express = require('express'),
+  bodyParser = require('body-parser'),
+  uuid = require('uuid');
+
+const morgan = require('morgan');
+const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
+const Genres = Models.Genre;
+const Directors = Models.Director;
 
 mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
 
-const express = require('express'),
-  morgan = require('morgan');
+app.use(bodyParser.json());
 
-const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan('common'));
 
@@ -48,45 +55,43 @@ app.post('/users', (req, res) => {
     });
 });
 
-let topMovies = [
-  {
-    title: 'Hot Rod'
-  },
-  {
-    title: 'The Other Guys'
-  },
-  {
-    title: 'The Matrix'
-  },
-  {
-    title: 'John Wick'
-  },
-  {
-    title: 'Drive'
-  },
-  {
-    title: 'The Big Lebowski'
-  },
-  {
-    title: 'O, Brother, Where Art Thou?'
-  },
-  {
-    title: 'Back to the Future'
-  },
-  {
-    title: 'There Will Be Blood'
-  },
-  {
-    title: 'The Assassination of Jesse James by the Coward Robert Ford'
-  },
-];
+// Get all users
+app.get('/users', (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+// Get a user by username
+app.get('/users/:Username', (req, res) => {
+  Users.findOne({ Username: req.params.Username })
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
 
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix');
 });
 
 app.get('/movies', (req, res) => {
-  res.json(topMovies);
+  Movies.find()
+  .then((movies) => {
+    res.status(201).json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
 });
 
 app.get('/documentation', (req, res) => {
