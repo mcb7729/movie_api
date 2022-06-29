@@ -11,6 +11,8 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
+const Titles = Models.Title;
+const Description = Models.Description;
 
 mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -19,6 +21,44 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan('common'));
+
+app.get('/', (req, res) => {
+  res.send('Welcome to myFlix');
+});
+
+app.get('/movies', (req, res) => {
+  Movies.find()
+  .then((movies) => {
+    res.status(201).json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
+});
+
+app.get('/movies/:Title', (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+  .then((movie) => {
+    res.json(movie);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
+});
+
+app.get('/movies/:Title/description', (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+  .then((description) => {
+    Movies.findOne({ Description: req.params.Description})
+    res.json(description);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
+});
 
 //Add a user
 /* We’ll expect JSON in this format
@@ -77,21 +117,6 @@ app.get('/users/:Username', (req, res) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
     });
-});
-
-app.get('/', (req, res) => {
-  res.send('Welcome to myFlix');
-});
-
-app.get('/movies', (req, res) => {
-  Movies.find()
-  .then((movies) => {
-    res.status(201).json(movies);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send('Error: ' + err);
-  });
 });
 
 app.get('/documentation', (req, res) => {
