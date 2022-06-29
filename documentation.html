@@ -27,31 +27,31 @@ account/unregister - delete  -->
       <td>/movies</td>
       <td>GET</td>
       <td>JSON list of all movies</td>
-      <td>JSON list of all movies</td>
+      <td>Returns list of all movies and movie data</td>
     </td>
     <tr>
-      <td>/:movie</td>
+      <td>/movies/:title</td>
       <td>GET</td>
-      <td>JSON list of movie selected by user</td>
-      <td>JSON list of movie selected by user</td>
+      <td>JSON object of movie by title</td>
+      <td>Returns movie info of title selected by the user</td>
     </td>
     <tr>
-      <td>/:movie/:description</td>
+      <td>/movies/:title/description</td>
       <td>GET</td>
       <td>JSON object holding movie description</td>
-      <td>JSON object holding movie description</td>
+      <td>Returns description of movie selected by the user</td>
     </tr>
     <tr>
       <td>/:movie/:genre</td>
       <td>GET</td>
       <td>JSON object holding movie genre</td>
-      <td>JSON object holding movie genre</td>
+      <td>Returns information about a specific movie genre</td>
     </tr>
     <tr>
       <td>/:movie/:director</td>
       <td>GET</td>
       <td>JSON object holding movie director</td>
-      <td>JSON object holding movie director</td>
+      <td>Returns information about a specific movie director</td>
     </tr>
     <tr>
       <td>/:movie/:imageUrl</td>
@@ -63,13 +63,13 @@ account/unregister - delete  -->
       <td>/genres</td>
       <td>GET</td>
       <td>JSON list of all movie genres</td>
-      <td>JSON list of all movie genres</td>
+      <td>Returns list of all movie genres and genre data</td>
     </tr>
     <tr>
       <td>/directors</td>
       <td>GET</td>
       <td>JSON list of all movie directors</td>
-      <td>JSON list of all movie directors</td>
+      <td>Returns list of all movie directors and director information</td>
     </tr>
     <tr>
       <td>/register</td>
@@ -81,7 +81,7 @@ account/unregister - delete  -->
       <td>/users</td>
       <td>GET</td>
       <td>JSON object holding user account profile</td>
-      <td>JSON object holding user account profile</td>
+      <td>Reutns list of all user information</td>
     </tr>
     <tr>
       <td>/users/favorites/add</td>
