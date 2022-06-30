@@ -48,15 +48,25 @@ app.get('/movies/:Title', (req, res) => {
   });
 });
 
-app.get('/movies/:Title/description', (req, res) => {
-  Movies.findOne({ Title: req.params.Title })
-  .then((description) => {
-    Movies.findOne({ Description: req.params.Description})
-    res.json(description);
+app.get('/genre/:Name', (req, res) => {
+  Genres.findOne({ Name: req.params.Name })
+  .then((genre) => {
+    res.json(genre.Description);
   })
   .catch((err) => {
     console.error(err);
     res.status(500).send('Error: ' + err);
+  });
+});
+
+app.get('/director/:Name', (req, res) => {
+  Directors.findOne({ Name: req.params.Name })
+  .then((director) => {
+  res.json(director);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error:' + err);
   });
 });
 
@@ -93,6 +103,53 @@ app.post('/users', (req, res) => {
       console.error(error);
       res.status(500).send('Error: ' + error);
     });
+});
+
+// Update a user's info, by username
+/* We’ll expect JSON in this format
+{
+  Username: String,
+  (required)
+  Password: String,
+  (required)
+  Email: String,
+  (required)
+  Birthday: Date
+}*/
+app.put('/users/:Username', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+    {
+      Username: req.body.Username,
+      Password: req.body.Password,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
+    }
+  },
+  { new: true }, // This line makes sure that the updated document is returned
+  (err, updatedUser) => {
+    if(err) {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    } else {
+      res.json(updatedUser);
+    }
+  });
+});
+
+// Add a movie to a user's list of favorites
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username }, {
+     $push: { FavoriteMovies: req.params.MovieID }
+   },
+   { new: true }, // This line makes sure that the updated document is returned
+  (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    } else {
+      res.json(updatedUser);
+    }
+  });
 });
 
 // Get all users
