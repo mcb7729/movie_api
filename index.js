@@ -49,9 +49,9 @@ app.get('/movies/:Title', (req, res) => {
 });
 
 app.get('/genre/:Name', (req, res) => {
-  Genres.findOne({ Name: req.params.Name })
+  Movies.findOne({ 'Genre.Name': req.params.Name })
   .then((genre) => {
-    res.json(genre.Description);
+    res.json(genre.Genre);
   })
   .catch((err) => {
     console.error(err);
@@ -60,9 +60,9 @@ app.get('/genre/:Name', (req, res) => {
 });
 
 app.get('/director/:Name', (req, res) => {
-  Directors.findOne({ Name: req.params.Name })
+  Movies.findOne({ 'Director.Name': req.params.Name })
   .then((director) => {
-  res.json(director);
+  res.json(director.Director);
   })
   .catch((err) => {
     console.error(err);
@@ -152,6 +152,19 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
   });
 });
 
+app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndRemove({ FavoriteMovies: req.params.MovieID },
+   { new: true }, // This line makes sure that the updated document is returned
+  (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    } else {
+      res.json(updatedUser);
+    }
+  });
+});
+
 // Get all users
 app.get('/users', (req, res) => {
   Users.find()
@@ -169,6 +182,22 @@ app.get('/users/:Username', (req, res) => {
   Users.findOne({ Username: req.params.Username })
     .then((user) => {
       res.json(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+// Delete a user by username
+app.delete('/users/:Username', (req, res) => {
+  Users.findOneAndRemove({ Username: req.params.Username })
+    .then((user) => {
+      if (!user) {
+        res.status(400).send(req.params.Username + ' was not found');
+      } else {
+        res.status(200).send(req.params.Username + ' was deleted.');
+      }
     })
     .catch((err) => {
       console.error(err);
